@@ -1,0 +1,51 @@
+#!/usr/bin/perl
+#
+# Program to draw a representation of a person's ancestry.
+#
+# The program reads from a data file. The data file needs one line per person
+# in the tree. Each line is a comma-separated list of data about a person.
+# There are three mandatory elements and one optional one.
+#
+# The three mandatory elements are person number (see below for explanation),
+# name and birth year. The optional element is death year. If death year is
+# omitted then the program assumes the person is still alive.
+#
+# Person number
+# This is all driven by the person number. There's a simple rule for working
+# out the number that should be associated with a person.
+#
+# If a person in the data file has the number $n, then that person's father is
+# 2 * $n and that person's mother is (2 * $n) + 1. The person that you're
+# starting from is number 1.
+#
+# So if I'm person one, then my father is 2 and my mother is 3. My four
+# grandparents are 4, 5, 6 and 7. And so on.
+#
+# This leads some interesting mathematical properties. Most of them I'll leave
+# to you to find out, but I'll just point out that with the exception of
+# person 1 (who can obviously be of either sex) all of the men have even
+# numbers and the women have odd numbers.
+#
+# This is also known as "Ahnentafel".
+# See https://en.wikipedia.org/wiki/Ahnentafel
+
+use strict;
+use warnings;
+
+use Genealogy::Chart::SVG;
+
+my $chart = Genealogy::Chart::SVG->new;
+
+while (<>) {
+  chomp;
+  my ($line) = split /#/;
+  next unless $line && $line =~ /\S/;
+  my @person = split ',', $line;
+  if (@person < 3) {
+    warn "Invalid record: $_\n";
+    next;
+  }
+  $chart->person(@person);
+}
+
+print $chart->xmlify;
