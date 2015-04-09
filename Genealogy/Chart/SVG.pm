@@ -100,12 +100,12 @@ has bar_outline_colour => (
 sub BUILD {
   my $self = shift;
 
-  my $curr_y = $self->left;
+  my $curr_year = $self->left;
   my $x      = 0;
 
   # Draw the decade lines
-  while ( $curr_y > ( $self->left - $self->years ) ) {
-    unless ( $curr_y % 10 ) {
+  while ( $curr_year > ( $self->left - $self->years ) ) {
+    unless ( $curr_year % 10 ) {
       $self->line(
         x1           => $x,
         y1           => 0,
@@ -118,9 +118,9 @@ sub BUILD {
         x           => $x + 1,
         y           => 12,
         'font-size' => $self->bar_height / 2
-      )->cdata($curr_y);
+      )->cdata($curr_year);
     }
-    $curr_y--;
+    $curr_year--;
     $x += $self->pixels_per_year;
   }
 
