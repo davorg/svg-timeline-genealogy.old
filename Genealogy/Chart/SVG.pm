@@ -24,6 +24,7 @@ sub _build_svg {
   );
 }
 
+# Array of colours - one for each generation.
 has colours => (
   is         => 'ro',
   isa        => 'ArrayRef',
@@ -46,42 +47,50 @@ sub _build_colours {
   ];
 }
 
+# The height of a bar in pixels
 has bar_height => (
   is      => 'ro',
   isa     => 'Int',
   default => 18,
 );
 
+# The number of years the chart will cover
 has years => (
   is      => 'ro',
   isa     => 'Int',
   default => 200,
 );
 
+# The number of horizontal pixels to use for each year
 has pixels_per_year => (
   is      => 'ro',
   isa     => 'Int',
   default => 5,
 );
 
+# The height of the chart in pixels
 has height => (
   is      => 'ro',
   isa     => 'Int',
   default => 1500,
 );
 
+# The left-hand extent of the chart.
+# N.B. Should probably rename to 'latest_year' or something like that.
 has left => (
   is      => 'ro',
   isa     => 'Int',
   default => localtime->year,
 );
 
+# The colour that the decade lines are drawn on the chart
 has decade_line_colour => (
   is      => 'ro',
   isa     => 'Str',
   default => 'rgb(127,127,127)',
 );
 
+# The colour that the bars are outlined
 has bar_outline_colour => (
   is      => 'ro',
   isa     => 'Str',
@@ -118,6 +127,7 @@ sub BUILD {
   return $self;
 }
 
+# Produce a bar containing the details of one person.
 sub person {
   my $self = shift;
   my ( $n, $name, $b, $d ) = @_;
@@ -126,6 +136,7 @@ sub person {
 
   my $until = $d || $self->left;
 
+  # TODO: I think that $p is pointless here
   my $p = $self->rect(
     x              => ( $self->left - $until ) * $self->pixels_per_year,
     y              => ( $self->height * y_pos($n) ) - ( $self->bar_height / 2 ),
@@ -163,6 +174,7 @@ sub gen {
 sub y_pos {
   die unless @_;
 
+  # TODO: int?
   return num( $_[0] ) / den( $_[0] );
 }
 
