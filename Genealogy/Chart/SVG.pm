@@ -136,8 +136,7 @@ sub person {
 
   my $until = $d || $self->left;
 
-  # TODO: I think that $p is pointless here
-  my $p = $self->rect(
+  $self->rect(
     x              => ( $self->left - $until ) * $self->pixels_per_year,
     y              => ( $self->height * y_pos($n) ) - ( $self->bar_height / 2 ),
     width          => ( $until - $b ) * $self->pixels_per_year,
