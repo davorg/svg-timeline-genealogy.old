@@ -168,8 +168,14 @@ sub gen {
 }
 
 # Calculate the y-position for a given person number.
-# Not entirely sure how I did this, to be honest. Need to reverse engineer
-# it and document it!
+# This is a decimal fraction of how far down the chart the person
+# should appear.
+#
+# The 1st generation appears 1/2 down the page.
+# The 2nd generation appears 1/4 and 3/4 down the page.
+# The 3rd generation appears 1/8, 3/8, 5/8 and 7/8 down the page. 
+# etc ...
+
 sub y_pos {
   die unless @_;
 
@@ -177,11 +183,22 @@ sub y_pos {
   return num( $_[0] ) / den( $_[0] );
 }
 
+# No idea how this works. But it does.
 sub num {
   my $num = shift;
 
   return 2 * ( $num - den($num) / 2 ) + 1;
 }
+
+# The denominator of the calculation of how far down the chart the given
+# person should appear.
+# For the 1st generation, it is 2.
+# For the 2nd generation, it is 4.
+# For the 3rd generation, it is 8.
+# etc ...
+#
+# So convert the persons number to a generation number, and calculate
+# 2 ** the generation number.
 
 sub den {
   my $num = shift;
