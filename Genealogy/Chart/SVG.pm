@@ -58,7 +58,7 @@ has bar_height => (
 has years => (
   is      => 'ro',
   isa     => 'Int',
-  default => 200,
+  default => 250,
 );
 
 # The number of horizontal pixels to use for each year
@@ -151,8 +151,8 @@ sub person {
   $text .= $d if $d;
   $text .= ')';
   $self->text(
-    x => ( $self->left - $until + 2 ) * $self->pixels_per_year,
-    y => ( $self->height * y_pos($n) ) + ( $self->bar_height / 2 ) - 3,
+    x => ( $self->left - $until + 1 ) * $self->pixels_per_year,
+    y => ( $self->height * y_pos($n) ) + ( $self->bar_height / 2 ) - 4,
     'font-size' => $self->bar_height - 4
   )->cdata($text);
 }
