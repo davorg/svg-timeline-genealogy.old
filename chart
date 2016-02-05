@@ -40,7 +40,7 @@ while (<>) {
   chomp;
   my ($line) = split /#/;
   next unless $line && $line =~ /\S/;
-  my @person = split ',', $line;
+  my @person = split /,/, $line;
   if (@person < 3) {
     warn "Invalid record: $_\n";
     next;
