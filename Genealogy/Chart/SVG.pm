@@ -7,6 +7,7 @@ use Moose;
 
 use Time::Piece;
 use File::Basename;
+use Carp;
 use SVG;
 
 has svg => (
@@ -61,12 +62,27 @@ has years => (
   default => 250,
 );
 
+# The number of years between vertical grid lines
+has years_per_grid => (
+  is      => 'ro',
+  isa     => 'Int',
+  default => 10, # One decade by default
+);
+
 # The number of horizontal pixels to use for each year
 has pixels_per_year => (
   is      => 'ro',
   isa     => 'Int',
   default => 5,
 );
+
+# Padding at the top and bottom of each person bar (in pixels)
+has bar_padding => (
+  is      => 'ro',
+  isa     => 'Int',
+  default => 2,
+);
+
 
 # The height of the chart in pixels
 has height => (
@@ -105,7 +121,7 @@ sub BUILD {
 
   # Draw the decade lines
   while ( $curr_year > ( $self->left - $self->years ) ) {
-    unless ( $curr_year % 10 ) {
+    unless ( $curr_year % $self->years_per_grid ) {
       $self->line(
         x1           => $x,
         y1           => 0,
@@ -151,9 +167,13 @@ sub person {
   $text .= ')';
   $self->text(
     x => ( $self->left - $until + 1 ) * $self->pixels_per_year,
-    y => ( $self->height * y_pos($n) ) + ( $self->bar_height / 2 ) - 4,
-    'font-size' => $self->bar_height - 4
+    y => ( $self->height * y_pos($n) )
+       + ( $self->bar_height / 2 )
+       - ( 2 * $self->bar_padding ),
+    'font-size' => $self->bar_height - $self->bar_padding,
   )->cdata($text);
+
+  return;
 }
 
 # Get the generation number from an Ahnentafel number.
@@ -162,7 +182,7 @@ sub person {
 # Persons 4, 5, 6 & 7 are Person 1's grandparents and are in generation 3
 # etc ...
 sub gen {
-  die unless @_;
+  croak 'No generation passed to gen()' unless @_;
 
   return int log( $_[0] ) / log(2) + 1;
 }
@@ -177,7 +197,7 @@ sub gen {
 # etc ...
 
 sub y_pos {
-  die unless @_;
+  croak 'No generation passed to y_pos()' unless @_;
 
   # TODO: int?
   return num( $_[0] ) / den( $_[0] );
