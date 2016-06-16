@@ -10,6 +10,8 @@ use File::Basename;
 use Carp;
 use SVG;
 
+use Genealogy::Ahnentafel;
+
 has svg => (
   is         => 'ro',
   isa        => 'SVG',
@@ -148,7 +150,7 @@ sub person {
   my $self = shift;
   my ( $n, $name, $b, $d ) = @_;
 
-  my $gen = gen($n);
+  my $gen = ahnen($n)->generation;
 
   my $until = $d || $self->left;
 
@@ -174,17 +176,6 @@ sub person {
   )->cdata($text);
 
   return;
-}
-
-# Get the generation number from an Ahnentafel number.
-# Person 1 is in generation 1
-# Persons 2 & 3 are Person 1's parents and are in generation 2
-# Persons 4, 5, 6 & 7 are Person 1's grandparents and are in generation 3
-# etc ...
-sub gen {
-  croak 'No generation passed to gen()' unless @_;
-
-  return int log( $_[0] ) / log(2) + 1;
 }
 
 # Calculate the y-position for a given person number.
@@ -223,7 +214,7 @@ sub num {
 sub den {
   my $num = shift;
 
-  return 2**( gen($num) );
+  return 2**( ahnen($num)->generation );
 }
 
 1;
