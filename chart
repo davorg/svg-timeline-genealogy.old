@@ -36,16 +36,20 @@ use Genealogy::Chart::SVG;
 
 my $chart = Genealogy::Chart::SVG->new;
 
+my @cols = qw[id name birth death];
+
 while (<>) {
   chomp;
   my ($line) = split /#/;
   next unless $line && $line =~ /\S/;
-  my @person = split /,/, $line;
-  if (@person < 3) {
+  my @data = split /,/, $line;
+  if (@data < 3) {
     warn "Invalid record: $_\n";
     next;
   }
-  $chart->person(@person);
+  my %person;
+  @person{@cols} = @data;
+  $chart->person(\%person);
 }
 
 print $chart->xmlify;

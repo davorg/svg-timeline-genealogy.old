@@ -148,28 +148,29 @@ sub BUILD {
 # Produce a bar containing the details of one person.
 sub person {
   my $self = shift;
+  my ($person) = @_;
   my ( $n, $name, $b, $d ) = @_;
 
-  my $gen = ahnen($n)->generation;
+  my $gen = ahnen($person->{id})->generation;
 
-  my $until = $d || $self->left;
+  my $until = $person->{death} || $self->left;
 
   $self->rect(
     x              => ( $self->left - $until ) * $self->pixels_per_year,
-    y              => ( $self->height * y_pos($n) ) - ( $self->bar_height / 2 ),
-    width          => ( $until - $b ) * $self->pixels_per_year,
+    y              => ( $self->height * y_pos($person->{id}) ) - ( $self->bar_height / 2 ),
+    width          => ( $until - $person->{birth} ) * $self->pixels_per_year,
     height         => $self->bar_height,
     fill           => $self->colours->[$gen],
     stroke         => $self->bar_outline_colour,
     'stroke-width' => 1
   );
 
-  my $text = "$n: $name ($b - ";
-  $text .= $d if $d;
+  my $text = "$person->{id}: $person->{name} ($person->{birth} - ";
+  $text .= $person->{death} if $person->{death};
   $text .= ')';
   $self->text(
     x => ( $self->left - $until + 1 ) * $self->pixels_per_year,
-    y => ( $self->height * y_pos($n) )
+    y => ( $self->height * y_pos($person->{id}) )
        + ( $self->bar_height / 2 )
        - ( 2 * $self->bar_padding ),
     'font-size' => $self->bar_height - $self->bar_padding,
