@@ -11,12 +11,12 @@ WriteMakefile(
     'ExtUtils::MakeMaker' => 0,
     SVG => 0,
     Moose => 0,
-    'Genealogy::Ahnentafle' => 0,
+    'Genealogy::Ahnentafel' => 0,
   },
   PREREQ_PM => {
     SVG => 0,
     Moose => 0,
-    'Genealogy::Ahnentafle' => 0,
+    'Genealogy::Ahnentafel' => 0,
   },
   META_MERGE => {
     'meta-spec' => { version => 2 },
