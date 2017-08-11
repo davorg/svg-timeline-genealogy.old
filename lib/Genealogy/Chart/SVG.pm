@@ -1,3 +1,13 @@
+=head1 NAME
+
+Genealogy::Chart::SVG
+
+=head1 DESCRIPTION
+
+Perl extension for drawing Genealogical charts using SVG.
+
+=cut
+
 package Genealogy::Chart::SVG;
 
 use strict;
@@ -115,6 +125,12 @@ has bar_outline_colour => (
   default => 'rgb(0,0,0)',
 );
 
+=head1 METHODS
+
+=head2 BUILD
+
+=cut
+
 sub BUILD {
   my $self = shift;
 
@@ -144,6 +160,10 @@ sub BUILD {
 
   return $self;
 }
+
+=head2 person
+
+=cut
 
 # Produce a bar containing the details of one person.
 sub person {
@@ -188,12 +208,20 @@ sub person {
 # The 3rd generation appears 1/8, 3/8, 5/8 and 7/8 down the page. 
 # etc ...
 
+=head2 y_pos
+
+=cut
+
 sub y_pos {
   croak 'No generation passed to y_pos()' unless @_;
 
   # TODO: int?
   return num( $_[0] ) / den( $_[0] );
 }
+
+=head2 num
+
+=cut
 
 # No idea how this works. But it does.
 sub num {
@@ -211,6 +239,10 @@ sub num {
 #
 # So convert the persons number to a generation number, and calculate
 # 2 ** the generation number.
+
+=head2 den
+
+=cut
 
 sub den {
   my $num = shift;
