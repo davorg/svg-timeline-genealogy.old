@@ -1,17 +1,17 @@
 
 use Test::More;
 
-use Genealogy::Chart::SVG;
+use SVG::Timeline::Genealogy;
 
-my $gcs = Genealogy::Chart::SVG->new;
+my $tl = SVG::Timeline::Genealogy->new;
 
-$gcs->person({
+$tl->person({
   id => 1,
   name => 'Mr Example',
   birth => 1900,
   death => 2000,
 });
 
-ok(my $chart = $gcs->xmlify);
+ok(my $chart = $tl->xmlify);
 
 done_testing();

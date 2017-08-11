@@ -32,9 +32,9 @@
 use strict;
 use warnings;
 
-use Genealogy::Chart::SVG;
+use SVG::Timeline::Genealogy;
 
-my $chart = Genealogy::Chart::SVG->new;
+my $chart = SVG::Timeline::Genealogy->new;
 
 my @cols = qw[id name birth death];
 

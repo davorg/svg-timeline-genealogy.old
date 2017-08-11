@@ -1,8 +1,8 @@
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-  NAME => 'Genealogy::Chart::SVG',
-  VERSION_FROM => 'lib/Genealogy/Chart/SVG.pm',
+  NAME => 'SVG::Timeline::Genealogy',
+  VERSION_FROM => 'lib/SVG/Timeline/Genealogy.pm',
   LICENSE      => 'perl_5',
   MIN_PERL_VERSION => '5.10.0',
 
@@ -21,8 +21,8 @@ WriteMakefile(
     resources => {
       repository => {
         type => 'git',
-        url => 'git://github.com/davorg/genealogy-chart-svg.git',
-        web => 'https://github.com/davorg/genealgoy-chart-svge',
+        url => 'git://github.com/davorg/svg-timeline-genealogy.git',
+        web => 'https://github.com/davorg/svg-timeline-genealgoy',
       },
     },
   },

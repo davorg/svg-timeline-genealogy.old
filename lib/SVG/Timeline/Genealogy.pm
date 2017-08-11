@@ -1,6 +1,6 @@
 =head1 NAME
 
-Genealogy::Chart::SVG
+SVG::Timeline::Genealogy
 
 =head1 DESCRIPTION
 
@@ -8,7 +8,7 @@ Perl extension for drawing Genealogical charts using SVG.
 
 =cut
 
-package Genealogy::Chart::SVG;
+package SVG::Timeline::Genealogy;
 
 use strict;
 use warnings;
