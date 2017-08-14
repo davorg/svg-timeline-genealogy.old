@@ -13,6 +13,9 @@ package SVG::Timeline::Genealogy;
 use strict;
 use warnings;
 
+use 5.010;
+our $VERSION = '0.0.1';
+
 use Moose;
 
 use Time::Piece;
@@ -205,7 +208,7 @@ sub person {
 #
 # The 1st generation appears 1/2 down the page.
 # The 2nd generation appears 1/4 and 3/4 down the page.
-# The 3rd generation appears 1/8, 3/8, 5/8 and 7/8 down the page. 
+# The 3rd generation appears 1/8, 3/8, 5/8 and 7/8 down the page.
 # etc ...
 
 =head2 y_pos
